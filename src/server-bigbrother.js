@@ -71,9 +71,12 @@ app.get('/health', (req, res) => {
 // V2 Routes (Big Brother Compliant)
 if (flagManager.isV2Enabled()) {
   const errorFixingRoutes = require('./routes/v2/errorFixing');
-  app.use('/api/v2/error-fixing', errorFixingRoutes);
+  const integrationRoutes = require('./routes/v2/integrationHub');
   
-  logger.info('Big Brother v2 routes loaded');
+  app.use('/api/v2/error-fixing', errorFixingRoutes);
+  app.use('/api/v2/integration', integrationRoutes);
+  
+  logger.info('Big Brother v2 routes loaded (error-fixing + integration)');
 } else {
   logger.info('V2 routes disabled via feature flags');
 }
